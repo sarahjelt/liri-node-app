@@ -1,4 +1,4 @@
-console.log('this is loaded');
+// console.log('this is loaded');
 var Twitter = require("twitter");
 
 twitterKeys = new Twitter ({

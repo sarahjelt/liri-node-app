@@ -13,7 +13,6 @@ var client = twitterKeys;
 // }
 
 var arg = process.argv[2];
-var anotherArg = process.argv[3];
 
 
 //twitter
@@ -36,10 +35,15 @@ if (arg === "my-tweets") {
 	
 //omdb
 } else if (arg === "movie-this") {
+	var arg3 = process.argv[3];
+	var movieInput = process.argv;
+	var anotherArg = process.argv.slice(3).join(" ");
+	// console.log(anotherArg);
 	var queryUrl = "http://www.omdbapi.com/?t=" + anotherArg + "&y=&plot=short&apikey=40e9cece";
+	// console.log(queryUrl);
 
 	request(queryUrl, function(error, response, body) {
-		if (! error && response.statusCode === 200 && anotherArg !== undefined) {
+		if (! error && response.statusCode === 200 && arg3 !== undefined) {
 			console.log(JSON.parse(body).Title);
 			console.log(JSON.parse(body).Year);
 			console.log(JSON.parse(body).imdbRating);
@@ -50,7 +54,7 @@ if (arg === "my-tweets") {
 			console.log(JSON.parse(body).Actors);
 		}
 	})
-	if (anotherArg === undefined) {
+	if (arg3 === undefined) {
 		queryUrl = "http://www.omdbapi.com/?t=mr+nobody&y=&plot=short&apikey=40e9cece"
 		request(queryUrl, function(error, response, body) {
 		if (! error && response.statusCode === 200) {
