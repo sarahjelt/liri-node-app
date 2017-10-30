@@ -36,20 +36,30 @@ if (arg === "my-tweets") {
 	var oneWordSong = process.argv[3];
 	var songInput = process.argv;
 	var multiWordSong = process.argv.slice(3).join(" ");
+	var noSong = "The Sign";
 
 	if (oneWordSong !== undefined) {
 		spotify.search({ type: 'track', query: multiWordSong }, function(err, data) {
-			if (err) {
-			return console.log('Error occurred: ' + err);
-		}
+				if (err) {
+				return console.log('Error occurred: ' + err);
+				}
 
-		console.log(data.tracks.items[0].artists[0].name);
-		console.log(data.tracks.items[0].name);
-		console.log(data.tracks.items[0].preview_url);
-		console.log(data.tracks.items[0].album.name); 
+			console.log("Artist: " + data.tracks.items[0].artists[0].name);
+			console.log("Song Title: " + data.tracks.items[0].name);
+			console.log("Preview URL: " + data.tracks.items[0].preview_url);
+			console.log("Album: " + data.tracks.items[0].album.name);
 		});
 	} else {
-		console.log("PLEASE ENTER A SONG TITLE!");
+		spotify.search({ type: 'track', query: noSong }, function(err, data) {
+				if (err) {
+				return console.log('Error occurred: ' + err);
+				}
+
+			console.log("Artist: " + data.tracks.items[8].artists[0].name);
+			console.log("Song Title: " + data.tracks.items[8].name);
+			console.log("Preview URL: " + data.tracks.items[8].preview_url);
+			console.log("Album: " + data.tracks.items[8].album.name);
+		});
 	}
 
 //omdb
@@ -74,18 +84,19 @@ if (arg === "my-tweets") {
 	if (arg3 === undefined) {
 		queryUrl = "http://www.omdbapi.com/?t=mr+nobody&y=&plot=short&apikey=40e9cece"
 		request(queryUrl, function(error, response, body) {
-		if (! error && response.statusCode === 200) {
-			console.log(JSON.parse(body).Title);
-			console.log(JSON.parse(body).Year);
-			console.log(JSON.parse(body).imdbRating);
-			console.log(JSON.parse(body).Ratings[1].Value);
-			console.log(JSON.parse(body).Country);
-			console.log(JSON.parse(body).Language);
-			console.log(JSON.parse(body).Plot);
-			console.log(JSON.parse(body).Actors);
-		}
-	})
+			if (! error && response.statusCode === 200) {
+				console.log(JSON.parse(body).Title);
+				console.log(JSON.parse(body).Year);
+				console.log(JSON.parse(body).imdbRating);
+				console.log(JSON.parse(body).Ratings[1].Value);
+				console.log(JSON.parse(body).Country);
+				console.log(JSON.parse(body).Language);
+				console.log(JSON.parse(body).Plot);
+				console.log(JSON.parse(body).Actors);
+			}
+		})
 	}
+
 //random.txt
 } else if (arg === "do-what-it-says") {
 
