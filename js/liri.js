@@ -1,8 +1,8 @@
 var keysJS = require("./keys.js");
 var inquirer = require("inquirer");
-var twitter = require("twitter");
+// var twitter = require("twitter");
 var request = require("request");
-var spotify = require("node-spotify-api");
+// var Spotify = require("node-spotify-api");
 var fs = require("fs");
 
 var client = twitterKeys;
@@ -30,17 +30,34 @@ if (arg === "my-tweets") {
 			}
 		}
 	});
+
 //spotify
 } else if (arg === "spotify-this-song") {
-	
+	var oneWordSong = process.argv[3];
+	var songInput = process.argv;
+	var multiWordSong = process.argv.slice(3).join(" ");
+
+	if (oneWordSong !== undefined) {
+		spotify.search({ type: 'track', query: multiWordSong }, function(err, data) {
+			if (err) {
+			return console.log('Error occurred: ' + err);
+		}
+
+		console.log(data.tracks.items[0].artists[0].name);
+		console.log(data.tracks.items[0].name);
+		console.log(data.tracks.items[0].preview_url);
+		console.log(data.tracks.items[0].album.name); 
+		});
+	} else {
+		console.log("PLEASE ENTER A SONG TITLE!");
+	}
+
 //omdb
 } else if (arg === "movie-this") {
 	var arg3 = process.argv[3];
 	var movieInput = process.argv;
 	var anotherArg = process.argv.slice(3).join(" ");
-	// console.log(anotherArg);
 	var queryUrl = "http://www.omdbapi.com/?t=" + anotherArg + "&y=&plot=short&apikey=40e9cece";
-	// console.log(queryUrl);
 
 	request(queryUrl, function(error, response, body) {
 		if (! error && response.statusCode === 200 && arg3 !== undefined) {
