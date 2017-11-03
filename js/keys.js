@@ -16,3 +16,4 @@ spotify = new Spotify({
 	});
 
 module.exports = twitterKeys;
+module.exports = spotify;
